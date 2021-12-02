@@ -1,4 +1,5 @@
 import logging
+from functools import lru_cache
 from typing import Dict
 
 import black
@@ -68,6 +69,7 @@ def format_text(*, text, config):
         raise black.NothingChanged from e
 
 
+@lru_cache(100)
 def load_config(filename: str) -> Dict:
     defaults = {
         "line_length": 88,
