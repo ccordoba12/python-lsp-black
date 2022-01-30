@@ -95,6 +95,11 @@ def load_config(filename: str) -> Dict:
 
     root = black.find_project_root((filename,))
 
+    # Black 22.1+ returns a tuple composed of the Path object returned in previous
+    # versions plus 'pyproject.toml'.
+    if isinstance(root, tuple):
+        root = root[0]
+
     pyproject_filename = root / "pyproject.toml"
 
     if not pyproject_filename.is_file():
